@@ -1,3 +1,3 @@
 export default {
-  API_ENDPOINT: 'http://localhost:8000/api'
+  API_ENDPOINT: 'https://obscure-crag-42054.herokuapp.com/noteful'
 }
