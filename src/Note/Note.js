@@ -22,11 +22,6 @@ export default class Note extends Component {
         'content-type': 'application/json'
       },
     })
-      .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
-        return res.json()
-      })
       .then(() => {
         this.context.deleteNote(noteId)
         this.props.onDeleteNote(noteId)
@@ -44,7 +39,7 @@ export default class Note extends Component {
             {this.props.title}
           </Link>
         </h2>
-        <button className='Note__delete' type='button'>
+        <button onClick={this.handleClickDelete} className='Note__delete' type='button'>
           <FontAwesomeIcon icon='trash-alt' />
           {' '}
           remove
