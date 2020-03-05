@@ -19,25 +19,29 @@ export default class AddNote extends Component {
       content: e.target['note-content'].value,
       folder_id: e.target['note-folder-id'].value
     }
-    fetch(`${config.API_ENDPOINT}/notes`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(newNote),
-    })
-      .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
-        return res.json()
+    if (!newNote.title || !newNote.content || !newNote.folder_id) {
+      alert('Note name, content, and folder ID are all required')
+    } else {
+      fetch(`${config.API_ENDPOINT}/notes`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(newNote),
       })
-      .then(note => {
-        this.context.addNote(note)
-        this.props.history.push(`/folders/${note.folder_id}`)
-      })
-      .catch(error => {
-        console.error({ error })
-      })
+        .then(res => {
+          if (!res.ok)
+            return res.json().then(e => Promise.reject(e))
+          return res.json()
+        })
+        .then(note => {
+          this.context.addNote(note)
+          this.props.history.push(`/folders/${note.folder_id}`)
+        })
+        .catch(error => {
+          console.error({ error })
+        })
+    }
   }
 
   render() {
